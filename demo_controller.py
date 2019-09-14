@@ -2,8 +2,6 @@ from controller import Controller
 import numpy as np
 
 def sigmoid_activation(x):
-	print(1./(1.+np.exp(-x)))
-	exit()
 	return 1./(1.+np.exp(-x))
 
 # implements controller structure for player
@@ -35,7 +33,8 @@ class player_controller(Controller):
 
 			# Outputting activated second layer. Each entry in the output is an action
 			output = sigmoid_activation(output1.dot(weights2)+ bias2)[0]
-			print(output)
+
+			# print(output)
 			# exit()
 		else:
 			bias = controller[:5].reshape(1, 5)

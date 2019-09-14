@@ -31,8 +31,6 @@ env = Environment(experiment_name=experiment_name,
                   level=2,
                   speed="fastest")
 
-# default environment fitness is assumed for experiment
-
 # env.state_to_log()
 
 ####   Optimization for controller solution (best genotype-weights for phenotype-network): Ganetic Algorihm    ###
@@ -41,7 +39,6 @@ ini = time.time()  # sets time marker
 
 
 # genetic algorithm params
-
 run_mode = 'train' # train or test
 
 n_hidden = 10
@@ -56,11 +53,15 @@ last_best = 0
 
 # runs simulation
 def simulation(env,x):
+    x = np.random.uniform(dom_l, dom_u, size=(n_vars,))
+    # exit()
     f,p,e,t = env.play(pcont=x)
+    print(f)
     return f
 
 # normalizes
 def norm(x, pfit_pop):
+    print("norm")
 
     if ( max(pfit_pop) - min(pfit_pop) ) > 0:
         x_norm = ( x - min(pfit_pop) )/( max(pfit_pop) - min(pfit_pop) )
@@ -75,7 +76,6 @@ def norm(x, pfit_pop):
 # evaluation
 def evaluate(x):
     return np.array(list(map(lambda y: simulation(env,y), x)))
-
 
 # tournament
 def tournament(pop):
@@ -168,6 +168,8 @@ if not os.path.exists(experiment_name+'/evoman_solstate'):
     print( '\nNEW EVOLUTION\n')
 
     pop = np.random.uniform(dom_l, dom_u, (npop, n_vars))
+    print(pop, "POPULATION")
+    print("Length of population = ", len(pop))
     fit_pop = evaluate(pop)
     best = np.argmax(fit_pop)
     mean = np.mean(fit_pop)
@@ -270,8 +272,6 @@ for i in range(ini_g+1, gens):
     solutions = [pop, fit_pop]
     env.update_solutions(solutions)
     env.save_state()
-
-
 
 
 fim = time.time() # prints total execution time for experiment
