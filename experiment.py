@@ -170,7 +170,11 @@ if not os.path.exists(experiment_name+'/evoman_solstate'):
     pop = np.random.uniform(dom_l, dom_u, (npop, n_vars))
     print(pop, "POPULATION")
     print("Length of population = ", len(pop))
+
+    # evaluate: haal de fitness eruit.
     fit_pop = evaluate(pop)
+    print(fit_pop, "SKJDHFKJSHDFKJHKJHKJH")
+    exit()
     best = np.argmax(fit_pop)
     mean = np.mean(fit_pop)
     std = np.std(fit_pop)

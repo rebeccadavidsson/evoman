@@ -1,9 +1,12 @@
-###############################################################################
-# EvoMan FrameWork - V1.0 2016  			                                  #
-# DEMO : Neuroevolution - Genetic Algorithm  neural network.                  #
-# Author: Karine Miras        			                                      #
-# karine.smiras@gmail.com     				                                  #
-###############################################################################
+"""
+Evolutionary Computing Task 1
+
+This script runs .....
+
+Names:
+Date:
+Group:
+"""
 
 # imports framework
 import sys
@@ -41,9 +44,34 @@ last_best = 0
 
 
 if __name__ == "__main__":
+    """DIT KAN ALLEMAAL IN EEN FOR LOOP!"""
 
-    for i in range(2):
-        x = np.random.uniform(dom_l, dom_u, size=(n_vars,))
-        print(x)
-        f,p,e,t = env.play(pcont=x)
-        print(f)
+    # Print state to log when game begins
+    env.state_to_log()
+
+    # Execute random game run and save population
+    population_first = np.random.uniform(dom_l, dom_u, size=(n_vars,))
+    # print(population_first)
+
+    fitness_first,p,e,t = env.play(pcont=population_first)
+
+    population_second = np.random.uniform(dom_l, dom_u, size=(n_vars,))
+    # print(population_second)
+
+    fitness_second,p,e,t = env.play(pcont=population_second)
+
+    print(fitness_first, fitness_second)
+
+    # Remember best population
+    if fitness_second >= fitness_first:
+        population_final = population_second
+        fitness_final    = fitness_second
+    else:
+        population_final = population_first
+        fitness_final    = fitness_first
+
+    # Update game with best solution
+    solution = [population_final, fitness_final]
+
+    env.update_solutions(solution)
+    env.save_state()
