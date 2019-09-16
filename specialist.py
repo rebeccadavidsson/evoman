@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
     # Get best solution
     best = np.argmax(fit_pop)
-    fit_pop[best] = float(evaluate(np.array([pop[best] ]))[0]) # repeats best eval, for stability issues
+    fit_pop[best] = float(evaluate(np.array([pop[best] ]))[0])
     best_sol = fit_pop[best]
 
     print(best_sol)
