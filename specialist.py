@@ -13,6 +13,7 @@ import sys
 sys.path.insert(0, 'evoman')
 from environment import Environment
 from demo_controller import player_controller
+from helpersfunctions import crossover, tournament, limits, evaluate
 
 # imports other libs
 import time
@@ -43,6 +44,7 @@ mutation = 0.2
 last_best = 0
 
 
+
 if __name__ == "__main__":
     """DIT KAN ALLEMAAL IN EEN FOR LOOP!"""
 
@@ -51,13 +53,10 @@ if __name__ == "__main__":
 
     # Execute random game run and save population
     population_first = np.random.uniform(dom_l, dom_u, size=(n_vars,))
-    # print(population_first)
-
     fitness_first,p,e,t = env.play(pcont=population_first)
 
+    # Make second population to compare later
     population_second = np.random.uniform(dom_l, dom_u, size=(n_vars,))
-    # print(population_second)
-
     fitness_second,p,e,t = env.play(pcont=population_second)
 
     print(fitness_first, fitness_second)
@@ -73,5 +72,19 @@ if __name__ == "__main__":
     # Update game with best solution
     solution = [population_final, fitness_final]
 
-    env.update_solutions(solution)
-    env.save_state()
+    # Perform crossover with better population (function declared in helpersfunctions.py)
+    offspring = crossover(population_final)
+    print("IK KOM HIER NIET UIT")
+    fit_offspring = evaluate(offspring)
+    print("EINDELIJK BEN IK ER UIT")
+
+    # Make new population with best population
+    new_population = np.vstack((population_final, offspring))
+    fit_pop = np.append(fitness_final, fitness_offspring)
+
+    # Get best solution
+    best = np.argmax(fit_pop)
+    fit_pop[best] = float(evaluate(np.array([pop[best] ]))[0]) # repeats best eval, for stability issues
+    best_sol = fit_pop[best]
+
+    print(best_sol)

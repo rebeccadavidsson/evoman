@@ -53,10 +53,10 @@ last_best = 0
 
 # runs simulation
 def simulation(env,x):
-    x = np.random.uniform(dom_l, dom_u, size=(n_vars,))
+    # x = np.random.uniform(dom_l, dom_u, size=(n_vars,))
     # exit()
     f,p,e,t = env.play(pcont=x)
-    print(f)
+    # print(f)
     return f
 
 # normalizes
